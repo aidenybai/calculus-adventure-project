@@ -2,10 +2,28 @@ import { render } from 'million';
 import { html } from 'million/html';
 import confetti from 'canvas-confetti';
 
+import dance from './img/dance.gif';
+import death from './img/death.gif';
+import death_song from './img/DEATH.mp3';
+import sabotage_song from './img/sabotage.mp3';
+import vote_song from './img/vote.mp3';
+import win_song from './img/win.mp3';
+import song_song from './img/song.mp3';
+import title from './img/title.png';
+import blue from './img/blue.webp';
+import red from './img/red.webp';
+import green from './img/green.webp';
+
+const color_img = {
+  blue,
+  red,
+  green,
+};
+
 document.querySelector('#enable').addEventListener('click', () => {
   const welcome =
     "Welcome to AMONG US, Sussy Solver! We have an emergency, Oxygen is sabotaged but they're really bad at it. It's gonna take 45 minutes before the spaceship explodes! We need to vote out the imposter quick! Will you help us complete tasks and save the day?";
-  const audio = new Audio('/img/sabotage.mp3');
+  const audio = new Audio(sabotage_song);
   const msg = new SpeechSynthesisUtterance();
 
   audio.volume = 0.5;
@@ -20,7 +38,7 @@ document.querySelector('#enable').addEventListener('click', () => {
     html`<div class="app">
       <div>
         <div class="mx-auto">
-          <img src="/img/title.png" width="300" />
+          <img src=${title} width="300" />
         </div>
         <p>${welcome}</p>
         <button
@@ -45,7 +63,7 @@ const map = {
   green: 3,
 };
 let vote = [];
-const audio = new Audio('/img/song.mp3');
+const audio = new Audio(song_song);
 
 const instructions = () => {
   const welcome =
@@ -65,7 +83,7 @@ const instructions = () => {
     html`<div class="app">
       <div>
         <div class="mx-auto">
-          <img src="/img/title.png" width="300" />
+          <img src=${title} width="300" />
         </div>
         <p>${welcome}</p>
         <div>
@@ -77,7 +95,7 @@ const instructions = () => {
                 task(color);
               }}
             >
-              <img src="/img/${color}.webp" width="100" />
+              <img src=${color_img[color]} width="100" />
             </button>`;
           })}
         </div>
@@ -112,7 +130,7 @@ const task = (color) => {
     html`<div class="app">
       <div>
         <div class="mx-auto">
-          <img src="/img/title.png" width="300" />
+          <img src=${color} width="300" />
         </div>
         <button
           onClick=${() => {
@@ -159,7 +177,7 @@ const voteScreen = () => {
   const welcome =
     'Good work on getting all the votes. It has come time to vote out the imposter... Choose wisely. If you choose wrong, you will be murdered by the sussy baka imposter. Win, and you save the spaceship. Can you do this crewmate?';
   const msg = new SpeechSynthesisUtterance();
-  const audio = new Audio('/img/vote.mp3');
+  const audio = new Audio(vote_song);
 
   audio.volume = 0.75;
   audio.loop = true;
@@ -173,7 +191,7 @@ const voteScreen = () => {
     html`<div class="app">
       <div>
         <div class="mx-auto">
-          <img src="/img/title.png" width="300" />
+          <img src=${title} width="300" />
         </div>
         <p>${welcome}</p>
         <div>
@@ -187,7 +205,7 @@ const voteScreen = () => {
                 else lose();
               }}
             >
-              <img src="/img/${color}.webp" width="100" />
+              <img src=${color_img[color]} width="100" />
             </button>`;
           })}
         </div>
@@ -200,7 +218,7 @@ const win = () => {
   const welcome =
     'Congrats crewmate. You have saved the entire spaceship and the sussy baka crew! Thank you for your bravery.';
   const msg = new SpeechSynthesisUtterance();
-  const audio = new Audio('/img/win.mp3');
+  const audio = new Audio(win_song);
 
   audio.volume = 0.55;
   audio.loop = true;
@@ -213,10 +231,10 @@ const win = () => {
     html`<div class="app">
       <div>
         <div class="mx-auto">
-          <img src="/img/title.png" width="300" />
+          <img src=${title} width="300" />
         </div>
         <p>${welcome}</p>
-        <img src="/img/dance.gif" width="500" />
+        <img src=${dance} width="500" />
       </div>
     </div>`
   );
@@ -226,10 +244,9 @@ const win = () => {
 };
 
 const lose = () => {
-  const welcome =
-    `You lost!! The impsoter was ${imposter}! Unfortunately, the imposters won, leading the spaceship to blow up and you getting sussy baka murdered`;
+  const welcome = `You lost!! The impsoter was ${imposter}! Unfortunately, the imposters won, leading the spaceship to blow up and you getting sussy baka murdered`;
   const msg = new SpeechSynthesisUtterance();
-  const audio = new Audio('/img/DEATH.mp3');
+  const audio = new Audio(death_song);
 
   audio.volume = 0.55;
   audio.loop = true;
@@ -242,10 +259,10 @@ const lose = () => {
     html`<div class="app">
       <div>
         <div class="mx-auto">
-          <img src="/img/title.png" width="300" />
+          <img src=${title} width="300" />
         </div>
         <p>${welcome}</p>
-        <img src="/img/death.gif" width="500" />
+        <img src=${death} width="500" />
       </div>
     </div>`
   );
