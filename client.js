@@ -58,9 +58,9 @@ document.querySelector('#enable').addEventListener('click', () => {
 let hasReadInstructions = false;
 
 const map = {
-  red: 1,
-  blue: 2,
-  green: 3,
+  red: 69,
+  blue: 69,
+  green: 69,
 };
 let vote = [];
 const audio = new Audio(song_song);
