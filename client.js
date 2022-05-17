@@ -130,7 +130,7 @@ const task = (color) => {
     html`<div class="app">
       <div>
         <div class="mx-auto">
-          <img src=${color} width="300" />
+          <img src=${color_img[color]} width="300" />
         </div>
         <button
           onClick=${() => {
