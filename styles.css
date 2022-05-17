@@ -1,0 +1,105 @@
+@font-face {
+  font-family: sus;
+  src: url(/img/sus.ttf);
+}
+
+body {
+  background: url(/img/bg.jpeg) no-repeat center center fixed;
+  background-size: cover;
+  color: pink;
+  font-family: 'Comic Neue', cursive;
+  font-size: 2rem;
+}
+
+.app {
+  padding-left: 25rem;
+  padding-right: 25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+p {
+  background-color: #000;
+}
+
+button {
+  border: 1.5px solid white;
+  padding: 1.5rem;
+  background: #000;
+  border-radius: 1.5rem;
+  font-size: 3rem;
+  color: white;
+  font-family: 'sus', cursive;
+  transition: all 0.2s ease;
+}
+
+button:disabled {
+  opacity: 0.25;
+}
+
+input {
+  border: 1.5px solid white;
+  padding: 2rem;
+  background: #000;
+  border-radius: 1.5rem;
+  font-size: 3rem;
+  color: white;
+  font-family: 'Comic Neue', cursive;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+#enable {
+  width: 100%;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.anim-shake {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px);
+  }
+  10% {
+    transform: translate(-1px, -2px);
+  }
+  20% {
+    transform: translate(-3px, 0px);
+  }
+  30% {
+    transform: translate(3px, 2px);
+  }
+  40% {
+    transform: translate(1px, -1px);
+  }
+  50% {
+    transform: translate(-1px, 2px);
+  }
+  60% {
+    transform: translate(-3px, 1px);
+  }
+  70% {
+    transform: translate(3px, 1px);
+  }
+  80% {
+    transform: translate(-1px, -1px);
+  }
+  90% {
+    transform: translate(1px, 2px);
+  }
+  100% {
+    transform: translate(1px, -2px);
+  }
+}

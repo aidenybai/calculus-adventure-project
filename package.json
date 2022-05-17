@@ -1,0 +1,16 @@
+{
+  "name": "calculus-adventure-project",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^1.8.2",
+    "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.5.1",
+    "million": "1.8.9-0"
+  }
+}
