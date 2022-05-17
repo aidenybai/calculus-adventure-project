@@ -9,6 +9,7 @@ body {
   color: pink;
   font-family: 'Comic Neue', cursive;
   font-size: 2rem;
+  overflow-x: hidden;
 }
 
 .app {
@@ -55,8 +56,7 @@ button:hover {
 }
 
 #enable {
-  width: 70%;
-  margin: 1rem;
+  width: 100%;
 }
 
 .mx-auto {
