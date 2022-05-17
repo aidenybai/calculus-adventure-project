@@ -22,7 +22,7 @@ const color_img = {
 
 document.querySelector('#enable').addEventListener('click', () => {
   const welcome =
-    "Welcome to AMONG US, Sussy Solver! We have an emergency, Oxygen is sabotaged but they're really bad at it. It's gonna take 45 minutes before the spaceship explodes! We need to vote out the imposter quick! Will you help us complete tasks and save the day?";
+    "Welcome to AMONG US, Sussy Solver! We have an emergency, Oxygen is sabotaged and we need to figure out the imposter FAST! It's 45 minutes before the spaceship explodes! Will you help us complete tasks and save the day?";
   const audio = new Audio(sabotage_song);
   const msg = new SpeechSynthesisUtterance();
 
@@ -67,7 +67,7 @@ const audio = new Audio(song_song);
 
 const instructions = () => {
   const welcome =
-    "Poggers! Let's get started. The game will... The crewmates are RED, BLUE, and GREEN. Select an amogus to enter your answer for a task!";
+    "Poggers! Let's get started. Refer to the materials given to you to find the crewmates and help them with their tasks. The crewmates are RED, BLUE, and GREEN. When you are done with a task, select an amogus to check your answer!";
   if (!hasReadInstructions) {
     const msg = new SpeechSynthesisUtterance();
 
