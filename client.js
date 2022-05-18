@@ -9,10 +9,12 @@ import sabotage_song from './img/sabotage.mp3';
 import vote_song from './img/vote.mp3';
 import win_song from './img/win.mp3';
 import song_song from './img/song.mp3';
+import meeting_song from './img/meeting.mp3';
 import title from './img/title.png';
 import blue from './img/blue.webp';
 import red from './img/red.webp';
 import green from './img/green.webp';
+import button_img from './img/button.webp';
 
 const color_img = {
   blue,
@@ -87,29 +89,48 @@ const instructions = () => {
         </div>
         <p>${welcome}</p>
         <div>
-          ${['red', 'blue', 'green'].map((color) => {
-            return html`<button
-              disabled=${vote.includes(color)}
-              onClick=${() => {
-                window.speechSynthesis.cancel();
-                task(color);
-              }}
-            >
-              <img src=${color_img[color]} width="100" />
-            </button>`;
-          })}
-        </div>
-        <div>
           ${vote.length === 3
             ? html`<button
                 onClick=${() => {
+                  const buzz = new Audio(meeting_song);
+                  buzz.play();
                   audio.pause();
                   voteScreen();
                 }}
               >
-                Begin vote
+                <img src=${button_img} width="150" />
               </button>`
             : ''}
+        </div>
+        <div>
+          ${['red', 'blue', 'green'].map((color) => {
+            return html`<button disabled=${!vote.includes(color)}>
+              <img class="small" src=${color_img[color]} width="50" />
+            </button>`;
+          })}
+        </div>
+        <div>
+          <input
+            type="text"
+            id="code"
+            placeholder="Enter crewmate code"
+          /><br /><br />
+          <button
+            onClick=${() => {
+              const crewmate_code = {
+                r: 'red',
+                g: 'blue',
+                b: 'green',
+              };
+              const input = document.querySelector('#code').value.trim();
+              if (Object.keys(crewmate_code).includes(input)) {
+                window.speechSynthesis.cancel();
+                task(crewmate_code[input]);
+              }
+            }}
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>`
@@ -117,7 +138,14 @@ const instructions = () => {
 };
 
 const task = (color) => {
-  const welcome = `Hello! I am ${color} amogus! Please enter your answer below:`;
+  let welcome = '';
+  if (color === 'red') {
+    welcome = `Yo! I'm red. I'm trying to do scan right now, but the scanner isnt calibrated right. Could you help scan me? My estimates tell me my surface area is between X and X. Lemme know ya answer if ya know!`;
+  } else if (color === 'green') {
+    welcome = `Um hey. My name is pin-... I mean green. Yeah I've just been running that's why I'm sweaty. Ummmmmm I was just at wires HAHAHA. Anyway, I can help you if you can help me with this task. `;
+  } else if (color === 'blue') {
+    welcome = `heya, its blue! darn im having a hard time fixing wires, you think you can help me with it? lmk your answer asap.`;
+  }
   const msg = new SpeechSynthesisUtterance();
 
   msg.text = welcome;
@@ -143,8 +171,14 @@ const task = (color) => {
         >
           Go Back
         </button>
-        <p>${welcome}</p>
-        <input id="val" type="number" placeholder="Enter here" /><br /><br />
+        <p id="wel1">${welcome}</p>
+        <input
+          required
+          type="submit"
+          id="val"
+          type="number"
+          placeholder="Enter here"
+        /><br /><br />
         <button
           onClick=${() => {
             if (lock) return;
@@ -152,9 +186,17 @@ const task = (color) => {
             window.speechSynthesis.cancel();
             if (map[color] === Number(document.querySelector('#val').value)) {
               const msg = new SpeechSynthesisUtterance();
-
-              msg.text = 'Correct! You got my vote! Pog ger sus!';
+              let message = '';
+              if (color === 'red') {
+                message = `Eyyy thank you so much homie!! I trust you for sure for sure. No kizzy, on god, homies for life!`;
+              } else if (color === 'green') {
+                message = `Ummmmm haha thank you. I guess i'll SEE you around haha. Anyway BYE I gotta go!`;
+              } else if (color === 'blue') {
+                message = `wow tysm!! u got my vote :))`;
+              }
+              msg.text = message;
               window.speechSynthesis.speak(msg);
+              document.querySelector('#wel1').textContent = message;
               vote.push(color);
               msg.onend = () => {
                 instructions();

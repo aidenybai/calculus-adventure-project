@@ -36,6 +36,17 @@ button {
   transition: all 0.2s ease;
 }
 
+button.small {
+  border: 1.5px solid white;
+  padding: 0.2rem;
+  background: #000;
+  border-radius: 1.5rem;
+  font-size: 3rem;
+  color: white;
+  font-family: 'sus', cursive;
+  transition: all 0.2s ease;
+}
+
 button:disabled {
   opacity: 0.25;
 }
