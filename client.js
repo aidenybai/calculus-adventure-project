@@ -100,7 +100,10 @@ const color_text = {
   green2: 'text-green',
 };
 
+window.speechSynthesis.cancel();
+
 document.querySelector('#enable').addEventListener('click', () => {
+  window.speechSynthesis.cancel();
   const welcome =
     'ATTENTION CREWMATES! There is [ONE] emergency that requires: [IMMEDIATE ATTENTION]. A non-bean lifeform has been detected onboard and has sabotaged the oxygen systems. It is up to you and your fellow crewmates to find the impostor, fix the problem, and save us all.';
   const audio = new Audio(sabotage_song);
@@ -198,12 +201,15 @@ const instructions = () => {
                 <button
                   onClick=${() => {
                     const crewmate_code = {
-                      RED1: 'red',
-                      BLUE1: 'blue',
-                      GREEN1: 'green1',
-                      GREEN2: 'green2',
+                      CREW_RED1: 'red',
+                      CREW_BLUE2: 'blue',
+                      CREW_GREEN3: 'green1',
+                      CREW_GREEN4: 'green2',
                     };
-                    const input = document.querySelector('#code').value.trim();
+                    const input = document
+                      .querySelector('#code')
+                      .value.trim()
+                      .toUpperCase();
 
                     if (Object.keys(crewmate_code).includes(input)) {
                       const color = crewmate_code[input];
@@ -297,7 +303,7 @@ const task = (color) => {
               } else if (color === 'green2') {
                 message = `Of course the two tanks would have the same volume! That filled it right up! I’ll make sure to vote for whoever you say next meeting. If you want any help figuring out the impostor, I saw red doing “tasks” in O2 around the time the sabotage happened, but I don’t think she saw me. I didn’t see blue all round either though, which is kinda suspicious as well. Good luck!`;
               } else if (color === 'blue') {
-                message = `Good work my gunslinging’ friend!  I was monitorin’ cams earlier and I saw private Blue and Red at O2, roger that? You got my trust, now proceed to the next task.`;
+                message = `Good work my gunslinging’ friend!  I was monitorin’ cams earlier and I saw private Green and Red at O2, roger that? You got my trust, now proceed to the next task.`;
               }
               task_audio = new Audio(color_lines[color].win);
               task_audio.play();
@@ -343,7 +349,7 @@ let imposter = 'green';
 
 const voteScreen = () => {
   const welcome =
-    'Good work on getting all the votes. It has come time to vote out the imposter... Choose wisely. If you choose wrong, you will be murdered by the sussy baka imposter. Win, and you save the spaceship. Can you do this crewmate?';
+    'Good work on getting all the votes. It has come time to vote out the imposter... Choose wisely. You can hover over the crewmates to get their testimony -- do listen carefully. If you choose wrong, you will be murdered by the sussy baka imposter. Win, and you save the spaceship. Can you do this crewmate?';
   const msg = new SpeechSynthesisUtterance();
   const audio = new Audio(vote_song);
 
@@ -355,9 +361,14 @@ const voteScreen = () => {
   audio.play();
 
   let canSpeak = false;
-  msg.onend = () => {
+  setTimeout(() => {
     canSpeak = true;
-  };
+    ['red', 'blue', 'green1'].forEach((c) => {
+      const el = document.querySelector(`#${c}`);
+      el.className = 'shaker';
+      el.disabled = undefined;
+    });
+  }, 8000);
 
   render(
     document.body,
@@ -370,8 +381,10 @@ const voteScreen = () => {
         <div>
           ${['red', 'blue', 'green1'].map((color) => {
             return html`<button
-              class="shaker"
+              id=${color}
+              disabled="disabled"
               onMouseOver=${() => {
+                if (!canSpeak) return;
                 if (task_audio) task_audio.pause();
                 task_audio = new Audio(color_lines[color].clue);
                 task_audio.play();
@@ -399,7 +412,8 @@ const voteScreen = () => {
               <img src=${color_img[color]} width="100" />
             </button>`;
           })}
-        </div><br />
+        </div>
+        <br />
         <small id="clue"></small>
       </div>
     </div>`
