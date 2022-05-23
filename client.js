@@ -21,6 +21,18 @@ import blue_task from './img/blue-task.png';
 import green1_task from './img/green1-task.png';
 import green2_task from './img/green2-task.png';
 
+import red_task_img from './img/problem1pic.png';
+import blue_task_img from './img/problem2pic.png';
+import green1_task_img from './img/problem3pic.png';
+import green2_task_img from './img/problem3pic1.png';
+
+const color_problems = {
+  red: red_task_img,
+  blue: blue_task_img,
+  green1: green1_task_img,
+  green2: green2_task_img,
+};
+
 const color_img = {
   blue,
   red,
@@ -190,16 +202,16 @@ const task = (color) => {
   const msg = new SpeechSynthesisUtterance();
   if (color === 'red') {
     msg.lang = 'en';
-    welcome = `Hia! I was goin’ about my tasks when I ran into trouble calibrating the scanner. I was hoping you could help me find this average crewmate surface area so that the scanner can scan me properly. You should be able to approximate this using the functions [insert functions here] and rotating them around the y-axis as shown in this diagram. Once you get the answer you can put the value of the surface area below.`;
+    welcome = `Hia! I was goin’ about my tasks when I ran into trouble calibrating the scanner. I was hoping you could help me find this average crewmate surface area so that the scanner can scan me properly. You should be able to approximate this using the functions [f(x) is equal to negative one fourth x to the fourth plus four] and [g(x) is equal to negative square root of 1 minus the quantity of x minus one squared] and rotating them around the y-axis as shown in this diagram. Once you get the answer you can put the value of the surface area below.`;
   } else if (color === 'green1') {
     msg.lang = 'de';
-    welcome = `Hey there, I was trying to fill up this engine with fuel but the stupid guide numbers rubbed off! The schematics for the tank are below, we should be able to calculate the volume of it from those. It’s just [insert function here] rotated around the x-axis for the interval [interval]. Give me the value below when you get it.`;
+    welcome = `Hey there, I was trying to fill up this engine with fuel but the stupid guide numbers rubbed off! The schematics for the tank are below, we should be able to calculate the volume of it from those. It’s just [sin of x plus two] rotated around the x-axis for the interval [zero to two pi]. Give me the value below when you get it.`;
   } else if (color === 'green2') {
     msg.lang = 'de';
-    welcome = `Oh hey again HAHAHAH hello ....`;
+    welcome = `This tank is also unlabeled. This one is the shape of [cosine of x plus two] rotated around the x-axis also for [zero to two pi]. It looks pretty similar to the other tank… put the volume below.`;
   } else if (color === 'blue') {
     msg.lang = 'zh';
-    welcome = `heya, its blue! darn im having a hard time fixing wires, you think you can help me with it? lmk your answer asap.`;
+    welcome = `Yo Yo Yo! I’m shootin’ sum asteroids here. Mind helpin’ me with shootin’ em’ down? Our VELOCITY vector is [x equals cosine t plus two t] and [y equals negative sine of t plus pi over two]. Now, find a way to get this to estimate where the asteroid is gunna be at t=5 seconds. Dad’gum ‘roids.`;
   }
 
   msg.text = welcome;
@@ -215,15 +227,13 @@ const task = (color) => {
         </div>
         <div class="mx-auto">
           <img src=${color_bg[color]} width="300" />
+          <details open>
+            <summary><b>View Problem Materials (click me)</b></summary>
+            <div>
+              <img src=${color_problems[color]} width="300" />
+            </div>
+          </details>
         </div>
-        <button
-          onClick=${() => {
-            window.speechSynthesis.cancel();
-            instructions();
-          }}
-        >
-          Go Back
-        </button>
         <p id="wel1" class=${color_text[color]}>${welcome}</p>
         <input
           required
@@ -247,17 +257,17 @@ const task = (color) => {
                 message = `[scan success; non-impostor lifeform confirmed.] Awesome! Thanks for helping me out; you’ll definitely have my vote for whoever during the meeting. I don’t know much about what was going on around the time of the sabotage, but I was around O2 and I saw that someone was watching the cameras. Bya!`;
               } else if (color === 'green1') {
                 msg.lang = 'de';
-                message = `Ummmmm haha thank you. I guess i'll SEE you around haha. Anyway BYE I gotta go!`;
+                message = `Looks like that worked! We still need to fill the other fuel tank though, so meet me in the same place on the opposite side of the engine wing.`;
               } else if (color === 'green2') {
                 msg.lang = 'de';
-                message = `HEHEHE hi`;
+                message = `Of course the two tanks would have the same volume! That filled it right up! I’ll make sure to vote for whoever you say next meeting. If you want any help figuring out the impostor, I saw red doing “tasks” in O2 around the time the sabotage happened, but I don’t think she saw me. I didn’t see blue all round either though, which is kinda suspicious as well. Good luck!`;
               } else if (color === 'blue') {
                 msg.lang = 'zh';
-                message = `wow tysm!! u got my vote :))`;
+                message = `Good work my gunslinging’ friend!  I was monitorin’ cams earlier and I saw private Blue and Red at O2, roger that? You got my trust, now proceed to the next task.`;
               }
               msg.text = message;
               window.speechSynthesis.speak(msg);
-              document.querySelector('#wel1').textContent = message;
+              document.querySelector('#note').textContent = `✅ ${message}`;
               vote.push(color);
               document.querySelector('#check').remove();
               msg.onend = () => {
@@ -267,17 +277,18 @@ const task = (color) => {
               let message = '';
               if (color === 'red') {
                 msg.lang = 'en';
-                message = `[SCAN FAILURE]. Huh, looks like that didn’t work. Maybe try again. You’re trying to get the Surface area when [insert functions here] are rotated around the y-axis as shown in the diagram. I believe in you!`;
+                message = `[SCAN FAILURE]. Huh, looks like that didn’t work. Maybe try again. You’re trying to get the Surface area when [Negative one fourth x to the fourth plus four and negative square root of 1 minus the quantity of x minus one squared] are rotated around the y-axis as shown in the diagram. I believe in you!`;
               } else if (color === 'green1') {
                 msg.lang = 'de';
-                message = `wrong`;
+                message = `*sigh*; Wrong amount of gas. Make sure to find the volume when [sin of x plus two] is rotated around the x-axis for the interval [zero to two pi]. It’s not that hard.`;
               } else if (color === 'green2') {
                 msg.lang = 'de';
-                message = `wrong`;
+                message = `Didn’t fill the thing up correctly, maybe try something else. You’re rotating [cosine of x plus 2] around the x-axis for [zero to two pi] and looking for the volume, just like the other tank. It looks very similar to the other tank, if that helps…`;
               } else if (color === 'blue') {
                 msg.lang = 'zh';
-                message = `wrong! i beet u up!`;
+                message = `Dad’gum it private! We missed that ‘roid. Better try again with correct coordinates or I’ll shove you in the cannon! We have our VELOCITY equations, but it might be more useful to turn them into POSITION equations first. Use [x equals cosine t plus two t] and [y equals negative sine of t plus pi over two] to find where the asteroid is gunna be at t=5 seconds.`;
               }
+              document.querySelector('#note').textContent = `❌ ${message}`;
               msg.text = message;
               window.speechSynthesis.speak(msg);
               lock = false;
@@ -285,6 +296,15 @@ const task = (color) => {
           }}
         >
           Check answer</button
+        ><button
+          class="fade"
+          onClick=${() => {
+            window.speechSynthesis.cancel();
+            instructions();
+          }}
+        >
+          Go Back</button
+        ><br /><br /><small class=${color_text[color]} id="note"></small
         ><br /><br />
       </div>
     </div>`
@@ -309,7 +329,7 @@ const voteScreen = () => {
   let canSpeak = false;
   msg.onend = () => {
     canSpeak = true;
-  }
+  };
 
   const squeal = new SpeechSynthesisUtterance();
   render(
@@ -326,21 +346,21 @@ const voteScreen = () => {
               class="shaker"
               onMouseOver=${() => {
                 if (canSpeak) {
-                window.speechSynthesis.cancel();
-                let message = '';
-                if (color === 'red') {
-                  squeal.lang = 'en';
-                  message = `It's not me, you saw me scan`;
-                } else if (color === 'green1') {
-                  squeal.lang = 'de';
-                  message = `I swear on my homeland I am not the imposter baka`;
-                } else if (color === 'blue') {
-                  squeal.lang = 'zh';
-                  message = `Not me, I no imposter`;
+                  window.speechSynthesis.cancel();
+                  let message = '';
+                  if (color === 'red') {
+                    squeal.lang = 'en';
+                    message = `It's not me, you saw me scan`;
+                  } else if (color === 'green1') {
+                    squeal.lang = 'de';
+                    message = `I swear on my homeland I am not the imposter baka`;
+                  } else if (color === 'blue') {
+                    squeal.lang = 'zh';
+                    message = `Not me, I no imposter`;
+                  }
+                  squeal.text = message;
+                  window.speechSynthesis.speak(squeal);
                 }
-                squeal.text = message;
-                window.speechSynthesis.speak(squeal);
-              }
               }}
               onClick=${() => {
                 if (!confirm('Are you sure')) return;
