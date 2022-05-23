@@ -26,6 +26,52 @@ import blue_task_img from './img/problem2pic.png';
 import green1_task_img from './img/problem3pic.png';
 import green2_task_img from './img/problem3pic1.png';
 
+import green1intro_line from './img/green1intro.wav';
+import green1win_line from './img/green1win.wav';
+import green1lose_line from './img/green1lose.wav';
+import green2intro_line from './img/green2intro.wav';
+import green2win_line from './img/green2win.wav';
+import green2lose_line from './img/green2lose.wav';
+import redintro_line from './img/redintro.wav';
+import redwin_line from './img/redwin.wav';
+import redlose_line from './img/redlose.wav';
+import redclue_line from './img/redclue.wav';
+import greenclue_line from './img/greenclue.wav';
+import blueintro_line from './img/blue1intro.mp3';
+import bluelose_line from './img/blue1lose.mp3';
+import bluewin_line from './img/bluewin.mp3';
+import blueclue_line from './img/blueclue.mp3';
+import WIN from './img/W.mp3';
+import LOSE from './img/L.mp3';
+
+let task_audio;
+
+const color_lines = {
+  red: {
+    intro: redintro_line,
+    lose: redwin_line,
+    win: redlose_line,
+    clue: redclue_line,
+  },
+  blue: {
+    intro: blueintro_line,
+    lose: bluelose_line,
+    win: bluewin_line,
+    clue: blueclue_line,
+  },
+  green1: {
+    intro: green1intro_line,
+    lose: green1win_line,
+    win: green1lose_line,
+    clue: greenclue_line,
+  },
+  green2: {
+    intro: green2intro_line,
+    lose: green2win_line,
+    win: green2lose_line,
+  },
+};
+
 const color_problems = {
   red: red_task_img,
   blue: blue_task_img,
@@ -72,7 +118,17 @@ document.querySelector('#enable').addEventListener('click', () => {
     html`<div class="app">
       <div>
         <div class="mx-auto">
-          <img src=${title} width="300" />
+          <img
+            src=${title}
+            width="300"
+            ondblclick=${() => {
+              if (prompt('password?') === 'amogus') {
+                window.speechSynthesis.cancel();
+                audio.pause();
+                voteScreen();
+              }
+            }}
+          />
         </div>
         <p>${welcome}</p>
         <button
@@ -92,7 +148,7 @@ document.querySelector('#enable').addEventListener('click', () => {
 let hasReadInstructions = false;
 
 const map = {
-  red: [69, 69],
+  red: [52, 53], // 52.704
   blue: [69, 69],
   green1: [0, 100],
   green2: [0, 100],
@@ -106,7 +162,7 @@ const instructions = () => {
   if (!hasReadInstructions) {
     const msg = new SpeechSynthesisUtterance();
 
-    audio.volume = 0.1;
+    audio.volume = 0.025;
     audio.loop = true;
 
     msg.text = welcome;
@@ -142,10 +198,10 @@ const instructions = () => {
                 <button
                   onClick=${() => {
                     const crewmate_code = {
-                      r: 'red',
-                      b: 'blue',
-                      g1: 'green1',
-                      g2: 'green2',
+                      RED1: 'red',
+                      BLUE1: 'blue',
+                      GREEN1: 'green1',
+                      GREEN2: 'green2',
                     };
                     const input = document.querySelector('#code').value.trim();
 
@@ -154,20 +210,7 @@ const instructions = () => {
                       if (vote.includes(color)) {
                         window.speechSynthesis.cancel();
                         const msg = new SpeechSynthesisUtterance();
-                        let message;
-                        if (color === 'red') {
-                          msg.lang = 'en';
-                          message = `Hey! I've already completed my task.`;
-                        } else if (color === 'green1') {
-                          msg.lang = 'de';
-                          message = `Dumbo, I've done this task already. Go help me on my next task`;
-                        } else if (color === 'green2') {
-                          msg.lang = 'de';
-                          message = `Stew peed. I'm done with both my tasks.`;
-                        } else if (color === 'blue') {
-                          msg.lang = 'zh';
-                          message = `Hallo. I already complete task`;
-                        }
+                        let message = `You've already done this task. Proceed to the next crewmate code`;
                         msg.text = message;
                         window.speechSynthesis.speak(msg);
                       } else {
@@ -199,23 +242,18 @@ const task = (color) => {
   let lock = false;
   let welcome = '';
 
-  const msg = new SpeechSynthesisUtterance();
+  task_audio = new Audio(color_lines[color].intro);
   if (color === 'red') {
-    msg.lang = 'en';
     welcome = `Hia! I was goin’ about my tasks when I ran into trouble calibrating the scanner. I was hoping you could help me find this average crewmate surface area so that the scanner can scan me properly. You should be able to approximate this using the functions [f(x) is equal to negative one fourth x to the fourth plus four] and [g(x) is equal to negative square root of 1 minus the quantity of x minus one squared] and rotating them around the y-axis as shown in this diagram. Once you get the answer you can put the value of the surface area below.`;
   } else if (color === 'green1') {
-    msg.lang = 'de';
     welcome = `Hey there, I was trying to fill up this engine with fuel but the stupid guide numbers rubbed off! The schematics for the tank are below, we should be able to calculate the volume of it from those. It’s just [sin of x plus two] rotated around the x-axis for the interval [zero to two pi]. Give me the value below when you get it.`;
   } else if (color === 'green2') {
-    msg.lang = 'de';
     welcome = `This tank is also unlabeled. This one is the shape of [cosine of x plus two] rotated around the x-axis also for [zero to two pi]. It looks pretty similar to the other tank… put the volume below.`;
   } else if (color === 'blue') {
-    msg.lang = 'zh';
     welcome = `Yo Yo Yo! I’m shootin’ sum asteroids here. Mind helpin’ me with shootin’ em’ down? Our VELOCITY vector is [x equals cosine t plus two t] and [y equals negative sine of t plus pi over two]. Now, find a way to get this to estimate where the asteroid is gunna be at t=5 seconds. Dad’gum ‘roids.`;
   }
 
-  msg.text = welcome;
-  window.speechSynthesis.speak(msg);
+  task_audio.play();
   hasReadInstructions = true;
 
   render(
@@ -227,7 +265,7 @@ const task = (color) => {
         </div>
         <div class="mx-auto">
           <img src=${color_bg[color]} width="300" />
-          <details open>
+          <details>
             <summary><b>View Problem Materials (click me)</b></summary>
             <div>
               <img src=${color_problems[color]} width="300" />
@@ -248,49 +286,38 @@ const task = (color) => {
             if (lock) return;
             lock = true;
             window.speechSynthesis.cancel();
+            if (task_audio) task_audio.pause();
             const answer = Number(document.querySelector('#val').value);
             if (map[color][0] <= answer && map[color][1] >= answer) {
-              const msg = new SpeechSynthesisUtterance();
               let message = '';
               if (color === 'red') {
-                msg.lang = 'en';
                 message = `[scan success; non-impostor lifeform confirmed.] Awesome! Thanks for helping me out; you’ll definitely have my vote for whoever during the meeting. I don’t know much about what was going on around the time of the sabotage, but I was around O2 and I saw that someone was watching the cameras. Bya!`;
               } else if (color === 'green1') {
-                msg.lang = 'de';
                 message = `Looks like that worked! We still need to fill the other fuel tank though, so meet me in the same place on the opposite side of the engine wing.`;
               } else if (color === 'green2') {
-                msg.lang = 'de';
                 message = `Of course the two tanks would have the same volume! That filled it right up! I’ll make sure to vote for whoever you say next meeting. If you want any help figuring out the impostor, I saw red doing “tasks” in O2 around the time the sabotage happened, but I don’t think she saw me. I didn’t see blue all round either though, which is kinda suspicious as well. Good luck!`;
               } else if (color === 'blue') {
-                msg.lang = 'zh';
                 message = `Good work my gunslinging’ friend!  I was monitorin’ cams earlier and I saw private Blue and Red at O2, roger that? You got my trust, now proceed to the next task.`;
               }
-              msg.text = message;
-              window.speechSynthesis.speak(msg);
+              task_audio = new Audio(color_lines[color].win);
+              task_audio.play();
               document.querySelector('#note').textContent = `✅ ${message}`;
               vote.push(color);
               document.querySelector('#check').remove();
-              msg.onend = () => {
-                instructions();
-              };
             } else {
               let message = '';
               if (color === 'red') {
-                msg.lang = 'en';
                 message = `[SCAN FAILURE]. Huh, looks like that didn’t work. Maybe try again. You’re trying to get the Surface area when [Negative one fourth x to the fourth plus four and negative square root of 1 minus the quantity of x minus one squared] are rotated around the y-axis as shown in the diagram. I believe in you!`;
               } else if (color === 'green1') {
-                msg.lang = 'de';
                 message = `*sigh*; Wrong amount of gas. Make sure to find the volume when [sin of x plus two] is rotated around the x-axis for the interval [zero to two pi]. It’s not that hard.`;
               } else if (color === 'green2') {
-                msg.lang = 'de';
                 message = `Didn’t fill the thing up correctly, maybe try something else. You’re rotating [cosine of x plus 2] around the x-axis for [zero to two pi] and looking for the volume, just like the other tank. It looks very similar to the other tank, if that helps…`;
               } else if (color === 'blue') {
-                msg.lang = 'zh';
                 message = `Dad’gum it private! We missed that ‘roid. Better try again with correct coordinates or I’ll shove you in the cannon! We have our VELOCITY equations, but it might be more useful to turn them into POSITION equations first. Use [x equals cosine t plus two t] and [y equals negative sine of t plus pi over two] to find where the asteroid is gunna be at t=5 seconds.`;
               }
               document.querySelector('#note').textContent = `❌ ${message}`;
-              msg.text = message;
-              window.speechSynthesis.speak(msg);
+              task_audio = new Audio(color_lines[color].lose);
+              task_audio.play();
               lock = false;
             }
           }}
@@ -299,6 +326,7 @@ const task = (color) => {
         ><button
           class="fade"
           onClick=${() => {
+            if (task_audio) task_audio.pause();
             window.speechSynthesis.cancel();
             instructions();
           }}
@@ -319,7 +347,7 @@ const voteScreen = () => {
   const msg = new SpeechSynthesisUtterance();
   const audio = new Audio(vote_song);
 
-  audio.volume = 0.75;
+  audio.volume = 0.25;
   audio.loop = true;
 
   msg.text = welcome;
@@ -331,7 +359,6 @@ const voteScreen = () => {
     canSpeak = true;
   };
 
-  const squeal = new SpeechSynthesisUtterance();
   render(
     document.body,
     html`<div class="app">
@@ -345,25 +372,24 @@ const voteScreen = () => {
             return html`<button
               class="shaker"
               onMouseOver=${() => {
-                if (canSpeak) {
-                  window.speechSynthesis.cancel();
-                  let message = '';
-                  if (color === 'red') {
-                    squeal.lang = 'en';
-                    message = `It's not me, you saw me scan`;
-                  } else if (color === 'green1') {
-                    squeal.lang = 'de';
-                    message = `I swear on my homeland I am not the imposter baka`;
-                  } else if (color === 'blue') {
-                    squeal.lang = 'zh';
-                    message = `Not me, I no imposter`;
-                  }
-                  squeal.text = message;
-                  window.speechSynthesis.speak(squeal);
+                if (task_audio) task_audio.pause();
+                task_audio = new Audio(color_lines[color].clue);
+                task_audio.play();
+                let message = '';
+                if (color === 'red') {
+                  message = `I don’t know much about what was going on around the time of the sabotage, but I was around O2 and I saw that someone was watching the cameras.`;
+                } else if (color === 'blue') {
+                  message = `I was monitorin’ cams earlier and I saw private Green and Red at O2, roger that?`;
+                } else if (color === 'green1') {
+                  message = `If you want any help figuring out the impostor, I saw red doing “tasks” in O2 around the time the sabotage happened, but I don’t think she saw me. I didn’t see blue all round either though, which is kinda suspicious as well`;
                 }
+                document.querySelector('#clue').textContent = message;
+                document.querySelector('#clue').className = color_text[color];
               }}
               onClick=${() => {
                 if (!confirm('Are you sure')) return;
+                if (task_audio) task_audio.pause();
+
                 window.speechSynthesis.cancel();
                 audio.pause();
                 if (color.includes(imposter)) win();
@@ -373,7 +399,8 @@ const voteScreen = () => {
               <img src=${color_img[color]} width="100" />
             </button>`;
           })}
-        </div>
+        </div><br />
+        <small id="clue"></small>
       </div>
     </div>`
   );
@@ -382,15 +409,14 @@ const voteScreen = () => {
 const win = () => {
   const welcome =
     'Congrats crewmate. You have saved the entire spaceship and the sussy baka crew! Thank you for your bravery.';
-  const msg = new SpeechSynthesisUtterance();
   const audio = new Audio(win_song);
+  const W = new Audio(WIN);
 
   audio.volume = 0.55;
   audio.loop = true;
 
-  msg.text = welcome;
-  window.speechSynthesis.speak(msg);
   audio.play();
+  W.play();
   render(
     document.body,
     html`<div class="app">
@@ -409,16 +435,15 @@ const win = () => {
 };
 
 const lose = () => {
-  const welcome = `You lost!! The impsoter was ${imposter}! Unfortunately, the imposters won, leading the spaceship to blow up and you getting sussy baka murdered`;
-  const msg = new SpeechSynthesisUtterance();
+  const welcome = `You lost!! The imposter was ${imposter}! Unfortunately, the imposters won, leading the spaceship to blow up and you getting sussy baka murdered`;
   const audio = new Audio(death_song);
+  const L = new Audio(LOSE);
 
   audio.volume = 0.55;
   audio.loop = true;
 
-  msg.text = welcome;
-  window.speechSynthesis.speak(msg);
   audio.play();
+  L.play();
   render(
     document.body,
     html`<div class="app">
