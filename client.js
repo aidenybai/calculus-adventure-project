@@ -152,9 +152,9 @@ let hasReadInstructions = false;
 
 const map = {
   red: [52, 53], // 52.704
-  blue: [69, 69],
-  green1: [0, 100],
-  green2: [0, 100],
+  blue: [23.5, 24.5], // 24
+  green1: [88, 89], // 88.826
+  green2: [88, 89], // 88.826
 };
 let vote = [];
 const audio = new Audio(song_song);
@@ -252,11 +252,11 @@ const task = (color) => {
   if (color === 'red') {
     welcome = `Hia! I was goin’ about my tasks when I ran into trouble calibrating the scanner. I was hoping you could help me find this average crewmate surface area so that the scanner can scan me properly. You should be able to approximate this using the functions [f(x) is equal to negative one fourth x to the fourth plus four] and [g(x) is equal to negative square root of 1 minus the quantity of x minus one squared] and rotating them around the y-axis as shown in this diagram. Once you get the answer you can put the value of the surface area below.`;
   } else if (color === 'green1') {
-    welcome = `Hey there, I was trying to fill up this engine with fuel but the stupid guide numbers rubbed off! The schematics for the tank are below, we should be able to calculate the volume of it from those. It’s just [sin of x plus two] rotated around the x-axis for the interval [zero to two pi]. Give me the value below when you get it.`;
+    welcome = `Hey there, I was trying to fill up this engine with fuel but the stupid guide numbers rubbed off! The schematics for the tank are below, we should be able to calculate the volume of it from those. It’s just [sin of x plus two] rotated around the x-axis for the interval [zero to two pi]. Give me the volume below when you get it.`;
   } else if (color === 'green2') {
     welcome = `This tank is also unlabeled. This one is the shape of [cosine of x plus two] rotated around the x-axis also for [zero to two pi]. It looks pretty similar to the other tank… put the volume below.`;
   } else if (color === 'blue') {
-    welcome = `Yo Yo Yo! I’m shootin’ sum asteroids here. Mind helpin’ me with shootin’ em’ down? Our VELOCITY vector is [x equals cosine t plus two t] and [y equals negative sine of t plus pi over two]. Now, find a way to get this to estimate where the asteroid is gunna be at t=5 seconds. Dad’gum ‘roids.`;
+    welcome = `Yo Yo Yo! I’m shootin’ sum asteroids here. Mind helpin’ me with shootin’ em’ down? Our VELOCITY vector is [x equals cosine t plus two t] and [y equals negative sine of t plus pi over two]. Now, find a way to get this to estimate the X COORDINATE where the asteroid is gunna be at t=5 seconds. Dad’gum ‘roids.`;
   }
 
   task_audio.play();
@@ -297,7 +297,7 @@ const task = (color) => {
             if (map[color][0] <= answer && map[color][1] >= answer) {
               let message = '';
               if (color === 'red') {
-                message = `[scan success; non-impostor lifeform confirmed.] Awesome! Thanks for helping me out; you’ll definitely have my vote for whoever during the meeting. I don’t know much about what was going on around the time of the sabotage, but I was around O2 and I saw that someone was watching the cameras. Bya!`;
+                message = `[SCAN SUCCESS; NON-IMPOSTER LIFEFORM CONFIRMED.] Awesome! Thanks for helping me out; you’ll definitely have my vote for whoever during the meeting. I don’t know much about what was going on around the time of the sabotage, but I was around O2 and I saw that someone was watching the cameras. Bya!`;
               } else if (color === 'green1') {
                 message = `Looks like that worked! We still need to fill the other fuel tank though, so meet me in the same place on the opposite side of the engine wing.`;
               } else if (color === 'green2') {
