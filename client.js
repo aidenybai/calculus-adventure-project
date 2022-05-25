@@ -422,7 +422,7 @@ const voteScreen = () => {
 
 const win = () => {
   const welcome =
-    'Congrats crewmate. You have saved the entire spaceship and the sussy baka crew! Thank you for your bravery.';
+    "Congrats crewmate. You have saved the entire spaceship and the sussy baka crew! Thank you for your bravery. Go back to Mrs. E's class. Behind Mrs. E's desk above the cubbards you must locate the Mochi in store for you as a reward. ";
   const audio = new Audio(win_song);
   const W = new Audio(WIN);
 
@@ -449,7 +449,7 @@ const win = () => {
 };
 
 const lose = () => {
-  const welcome = `You lost!! The imposter was ${imposter}! Unfortunately, the imposters won, leading the spaceship to blow up and you getting sussy baka murdered`;
+  const welcome = `You lost!! The imposter was ${imposter}! Unfortunately, the imposters won, leading the spaceship to blow up and you getting sussy baka murdered. Go back to Mrs. E's class. Behind Mrs. E's desk above the cubbards you must locate the Mochi in store for you as a participation prize.`;
   const audio = new Audio(death_song);
   const L = new Audio(LOSE);
 
