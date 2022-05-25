@@ -151,10 +151,10 @@ document.querySelector('#enable').addEventListener('click', () => {
 let hasReadInstructions = false;
 
 const map = {
-  red: [52, 53], // 52.704
-  blue: [23.5, 24.5], // 24
-  green1: [88, 89], // 88.826
-  green2: [88, 89], // 88.826
+  red: [51.704, 54.704], // 52.704
+  blue: [23, 24], // 24
+  green1: [87.826, 89.826], // 88.826
+  green2: [87.826, 89.826], // 88.826
 };
 let vote = [];
 const audio = new Audio(song_song);
