@@ -250,7 +250,7 @@ const task = (color) => {
 
   task_audio = new Audio(color_lines[color].intro);
   if (color === 'red') {
-    welcome = `Hia! I was goin’ about my tasks when I ran into trouble calibrating the scanner. I was hoping you could help me find this average crewmate surface area so that the scanner can scan me properly. You should be able to approximate this using the functions [f(x) is equal to negative one fourth x to the fourth plus four] and [g(x) is equal to negative square root of 1 minus the quantity of x minus one squared] and rotating them around the y-axis as shown in this diagram. Once you get the answer you can put the value of the surface area below.`;
+    welcome = `Hia! I was goin’ about my tasks when I ran into trouble calibrating the scanner. I was hoping you could help me find this average crewmate surface area so that the scanner can scan me properly. You should be able to approximate this using the functions [f(x) is equal to negative one fourth x to the fourth plus four] and [g(x) is equal to negative square root of 1 minus the quantity of x minus one squared] and rotating them around the y-axis as shown in this diagram. Once you get the answer you can put the value of the surface area below. (only use the shaded area, where f(x) defines the part above the x axis, and g(x) defines the part below the x axis)`;
   } else if (color === 'green1') {
     welcome = `Hey there, I was trying to fill up this engine with fuel but the stupid guide numbers rubbed off! The schematics for the tank are below, we should be able to calculate the volume of it from those. It’s just [sin of x plus two] rotated around the x-axis for the interval [zero to two pi]. Give me the volume below when you get it.`;
   } else if (color === 'green2') {
