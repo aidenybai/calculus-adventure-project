@@ -105,7 +105,7 @@ window.speechSynthesis.cancel();
 document.querySelector('#enable').addEventListener('click', () => {
   window.speechSynthesis.cancel();
   const welcome =
-    'ATTENTION CREWMATES! There is [ONE] emergency that requires: [IMMEDIATE ATTENTION]. A non-bean lifeform has been detected onboard and has sabotaged the oxygen systems. It is up to you and your fellow crewmates to find the impostor, fix the problem, and save us all.';
+    'ATTENTION CREWMATES! There is [ONE] emergency that requires: [IMMEDIATE ATTENTION]. A non-bean lifeform has been detected onboard and has sabotaged the oxygen systems. It is up to you and your fellow crewmates to find the impostor, fix the problem, and save us all. PLEASE TURN UP THE VOLUME OF YOUR DEVICE. THE COMMENTARY IS IMPORTANT.';
   const audio = new Audio(sabotage_song);
   const msg = new SpeechSynthesisUtterance();
 
@@ -201,10 +201,10 @@ const instructions = () => {
                 <button
                   onClick=${() => {
                     const crewmate_code = {
-                      CREW_RED1: 'red',
-                      CREW_BLUE2: 'blue',
-                      CREW_GREEN3: 'green1',
-                      CREW_GREEN4: 'green2',
+                      RED_NOT_SUSSY: 'red',
+                      ROID_BLASTA69: 'blue',
+                      GAS_GAS_GAS: 'green1',
+                      TOKYO_DRIFT: 'green2',
                     };
                     const input = document
                       .querySelector('#code')
@@ -250,13 +250,13 @@ const task = (color) => {
 
   task_audio = new Audio(color_lines[color].intro);
   if (color === 'red') {
-    welcome = `Hia! I was goin’ about my tasks when I ran into trouble calibrating the scanner. I was hoping you could help me find this average crewmate surface area so that the scanner can scan me properly. You should be able to approximate this using the functions [f(x) is equal to negative one fourth x to the fourth plus four] and [g(x) is equal to negative square root of 1 minus the quantity of x minus one squared] and rotating them around the y-axis as shown in this diagram. Once you get the answer you can put the value of the surface area below. (only use the shaded area, where f(x) defines the part above the x axis, and g(x) defines the part below the x axis)`;
+    welcome = `Hia! I was goin’ about my tasks when I ran into trouble calibrating the scanner. I was hoping you could help me find this average crewmate surface area so that the scanner can scan me properly. You should be able to approximate this using the functions [f(x) = -0.25x^4 + 4] and [g(x) = -sqrt(1-(x-1)^2)] and rotating them around the y-axis as shown in this diagram. Once you get the answer you can put the value of the surface area below. (only use the shaded area, where f(x) defines the part above the x axis, and g(x) defines the part below the x axis)`;
   } else if (color === 'green1') {
-    welcome = `Hey there, I was trying to fill up this engine with fuel but the stupid guide numbers rubbed off! The schematics for the tank are below, we should be able to calculate the volume of it from those. It’s just [sin of x plus two] rotated around the x-axis for the interval [zero to two pi]. Give me the volume below when you get it.`;
+    welcome = `Hey there, I was trying to fill up this engine with fuel but the stupid guide numbers rubbed off! The schematics for the tank are below, we should be able to calculate the volume of it from those. It’s just [sin(x) + 2] rotated around the x-axis for the interval [0 to 2pi]. Give me the volume below when you get it.`;
   } else if (color === 'green2') {
-    welcome = `This tank is also unlabeled. This one is the shape of [cosine of x plus two] rotated around the x-axis also for [zero to two pi]. It looks pretty similar to the other tank… put the volume below.`;
+    welcome = `This tank is also unlabeled. This one is the shape of [cos(x) + 2] rotated around the x-axis also for [0 to 2pi]. It looks pretty similar to the other tank… put the volume below.`;
   } else if (color === 'blue') {
-    welcome = `Yo Yo Yo! I’m shootin’ sum asteroids here. Mind helpin’ me with shootin’ em’ down? Our VELOCITY vector is [x equals cosine t plus two t] and [y equals negative sine of t plus pi over two]. Now, find a way to get this to estimate the X COORDINATE where the asteroid is gunna be at t=5 seconds. Dad’gum ‘roids.`;
+    welcome = `Yo Yo Yo! I’m shootin’ sum asteroids here. Mind helpin’ me with shootin’ em’ down? Our VELOCITY vector is [x = cos(t) + 2t] and [y = -sin(t + (pi/2))]. Now, find a way to get this to estimate the X COORDINATE where the asteroid is gunna be at t=5 seconds. Dad’gum ‘roids.`;
   }
 
   task_audio.play();
@@ -278,6 +278,7 @@ const task = (color) => {
             </div>
           </details>
         </div>
+        <blockquote>PAY ATTENTION TO DIALOGUE, WILL HELP YOU SUS OUT THE IMPOSTER LATER.</blockquote>
         <p id="wel1" class=${color_text[color]}>${welcome}</p>
         <input
           required
@@ -313,13 +314,13 @@ const task = (color) => {
             } else {
               let message = '';
               if (color === 'red') {
-                message = `[SCAN FAILURE]. Huh, looks like that didn’t work. Maybe try again. You’re trying to get the Surface area when [Negative one fourth x to the fourth plus four and negative square root of 1 minus the quantity of x minus one squared] are rotated around the y-axis as shown in the diagram. I believe in you!`;
+                message = `[SCAN FAILURE]. Huh, looks like that didn’t work. Maybe try again. You’re trying to get the Surface area when [f(x) = -0.25x^4 + 4] and [g(x) = -sqrt(1-(x-1)^2)] are rotated around the y-axis as shown in the diagram. I believe in you!`;
               } else if (color === 'green1') {
-                message = `*sigh*; Wrong amount of gas. Make sure to find the volume when [sin of x plus two] is rotated around the x-axis for the interval [zero to two pi]. It’s not that hard.`;
+                message = `*sigh*; Wrong amount of gas. Make sure to find the volume when [sin(x) + 2] is rotated around the x-axis for the interval [0 to 2pi]. It’s not that hard.`;
               } else if (color === 'green2') {
-                message = `Didn’t fill the thing up correctly, maybe try something else. You’re rotating [cosine of x plus 2] around the x-axis for [zero to two pi] and looking for the volume, just like the other tank. It looks very similar to the other tank, if that helps…`;
+                message = `Didn’t fill the thing up correctly, maybe try something else. You’re rotating [cos(x) + 2] around the x-axis for [0 to 2pi] and looking for the volume, just like the other tank. It looks very similar to the other tank, if that helps…`;
               } else if (color === 'blue') {
-                message = `Dad’gum it private! We missed that ‘roid. Better try again with correct coordinates or I’ll shove you in the cannon! We have our VELOCITY equations, but it might be more useful to turn them into POSITION equations first. Use [x equals cosine t plus two t] and [y equals negative sine of t plus pi over two] to find where the asteroid is gunna be at t=5 seconds.`;
+                message = `Dad’gum it private! We missed that ‘roid. Better try again with correct coordinates or I’ll shove you in the cannon! We have our VELOCITY equations, but it might be more useful to turn them into POSITION equations first. Use [x = cos(t) + 2t] and [y = -sin(t + (pi/2))] to find where the asteroid is gunna be at t=5 seconds.`;
               }
               document.querySelector('#note').textContent = `❌ ${message}`;
               task_audio = new Audio(color_lines[color].lose);
@@ -378,6 +379,16 @@ const voteScreen = () => {
           <img src=${title} width="300" />
         </div>
         <p>${welcome}</p>
+        <details style="text-align: left !important">
+          <summary>Observations</summary>
+          <ul>
+            <li>You saw RED scan at medbay</li>
+            <li>BLUE was at asteroids</li>
+            <li>RED saw someone on cams</li>
+            <li>GREEN saw RED and BLUE during sabotage</li>
+            <li>GREEN did gas task quickly</li>
+          </ul>
+        </details>
         <div>
           ${['red', 'blue', 'green1'].map((color) => {
             return html`<button
@@ -415,6 +426,7 @@ const voteScreen = () => {
         </div>
         <br />
         <small id="clue"></small>
+        <br />
       </div>
     </div>`
   );
